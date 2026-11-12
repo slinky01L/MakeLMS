@@ -1,0 +1,23 @@
+﻿@page "/instructor/courses"
+
+<div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+    <div>
+        <div class="page-title mb-0">Course Title</div>
+        <span class="badge bg-light text-muted border">Draft Status</span>
+    </div>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm">Save draft</button>
+        <button type="button" class="btn btn-primary btn-sm">Publish</button>
+    </div>
+</div>
+
+<div class="builder-shell">
+    <div class="builder-tree">
+        <CourseTree Modules="Course.Modules"/>
+    </div>
+
+    <div class="builder-editor">
+
+    </div>
+</div>

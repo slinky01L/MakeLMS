@@ -1,0 +1,41 @@
+﻿@using MakeLMS.Data
+@if (Pill)
+{
+    <span class="type-pill @CssClass">
+        @RenderIcon()
+        <span>@Label</span>
+    </span>
+}
+else
+{
+    <div class="type-icon @CssClass" style="width:@(SizePx)px;height:@(SizePx)px;">
+        @RenderIcon()
+    </div>
+}
+
+@code {
+    [Parameter] public LessonResourceType Type { get; set; }
+    [Parameter] public bool Pill { get; set; } = false;
+    [Parameter] public int SizePx { get; set; } = 28;
+
+    private string CssClass => Type switch
+    {
+        LessonResourceType.Video => "video",
+        LessonResourceType.Quiz => "quiz",
+        _ => "text"
+    };
+
+    private string Label => Type switch
+    {
+        LessonResourceType.Video => "VIDEO",
+        LessonResourceType.Quiz => "QUIZ",
+        _ => "TEXT"
+    };
+
+    private RenderFragment RenderIcon() => Type switch
+    {
+        LessonResourceType.Video => @<svg class="ic" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>,
+        LessonResourceType.Quiz => @<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2 4-4" /></svg>,
+        _ => @<svg class="ic" viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z" /><path d="M9 9h6M9 13h6M9 17h4" /></svg>
+    };
+}
