@@ -96,6 +96,10 @@ namespace MakeLMS.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ThumbnailImagePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("CourseNumber");
 
                     b.ToTable("Courses");
@@ -345,6 +349,24 @@ namespace MakeLMS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MakeLMS.Data.Lesson", b =>
+                {
+                    b.HasOne("MakeLMS.Data.Module", null)
+                        .WithMany("Lessons")
+                        .HasForeignKey("CourseNumber", "ModuleNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MakeLMS.Data.Module", b =>
+                {
+                    b.HasOne("MakeLMS.Data.Course", null)
+                        .WithMany("Modules")
+                        .HasForeignKey("CourseNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -445,6 +467,16 @@ namespace MakeLMS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MakeLMS.Data.Course", b =>
+                {
+                    b.Navigation("Modules");
+                });
+
+            modelBuilder.Entity("MakeLMS.Data.Module", b =>
+                {
+                    b.Navigation("Lessons");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@
 <div class="soft-card p-2">
      <div class="d-flex justify-content-between align-items-center px-2 py-1">
         <span class="fw-bold small">Course content</span>
-        <button type="button" class="btn btn-sm btn-link p-0" style="font-size:.78rem;">+ Add module</button>
+        <button type="button" class="btn btn-sm btn-link p-0" style="font-size:.78rem;" @onclick="AddModule_Click">+ Add module</button>
     </div>
 
     @foreach (var module in Modules)
@@ -18,14 +18,14 @@
             
             @foreach (var lesson in module.Lessons)
             {
-                var isSelected = lesson == SelectedLesson;
-                <div class="b-lesson-row @(isSelected ? "selected" : "")" @onclick="() => { }">
+                var isSelected = SelectedLesson is not null ? lesson == SelectedLesson : false;
+                <div class="b-lesson-row @(isSelected ? "selected" : "")" @onclick="() => { LessonSelect_Click(lesson.LessonNumber); }">
                     <LessonTypeIndicator Type="lesson.LessonType" SizePx="24" />
                     <span class="flex-fill small @(isSelected ? "fw-bold" : "")">@lesson.Name</span>
                 </div>
             }
             
-            <button type="button" class="btn btn-sm btn-link ps-4" style="font-size:.8rem;" @onclick="() => { }">+ Add lesson</button>
+            <button type="button" class="btn btn-sm btn-link ps-4" style="font-size:.8rem;" @onclick="async () => { await AddLesson_Click(module.ModuleNumber); }">+ Add lesson</button>
         </div>
     }
     
